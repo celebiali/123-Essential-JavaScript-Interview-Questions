@@ -1,73 +1,72 @@
 ![](coverPage.png)
 
-# 123-JavaScript-Mülakat-Soruları
+# 123-JavaScript-Interview-Questions
 
-Bu kitap, özenle derlenmiş sorular koleksiyonu aracılığıyla JavaScript Frontend geliştiricilerin teknik iş görüşmelerine hazırlanmalarına yardımcı olmayı amaçlamaktadır.
+This book's goal is to help javascript frontend developers prepare for technical job interviews through a collection of carefully compiled questions.
 
-## Kitabı kağıt formda satın almak ister misin? Badass flashcard'lar ister misin?
+## Want to buy a book in paper form? Want some badass flashcards?
 
-  -  Bu Kitap yakında tamamlanacak ve daha sonra kağıt formda satın alınabilecek. Bu kitabın erken bir kopyasını size göndermemi istiyorsanız, lütfen adınızı ve e-posta adresinizi bu [Google Form](https://goo.gl/forms/c8ubV1tWBBdz6fJP2) ekleyin.
-- Beklemek istemiyorsanız, görüşmeciler arasında popülerliğe göre sıralanmış frontend mülakat soruları, güzel poker boyutunda flashcard'lara basılmış olan  [Yuri's JavaScript Flashcards](http://flashcardsjs.com) satın alabilirsiniz.
+ - This Book will be soon completed and then it will be available to buy in paper form. If you want me to send you an early copy of this book, please add your name and email address in this [Google Form](https://goo.gl/forms/c8ubV1tWBBdz6fJP2).
+ - If you don't want to wait, you can buy [Yuri's JavaScript Flashcards](http://flashcardsjs.com), a set of frontend interview questions sorted by popularity among interviewers printed on beautiful poker-size flashcards.
 
+## Question 1. What's the difference between `undefined` and `not defined` in JavaScript
 
-## Soru 1. JavaScript'te `undefined` ile `not defined` arasındaki fark nedir?
+<details><summary><b>Answer</b></summary>
 
-<details><summary><b>Cevap</b></summary>
+In JavaScript if you try to use a variable that doesn't exist and has not been declared, then JavaScript will throw an error `var name is not defined` and the script will stop executing thereafter. But If you use `typeof undeclared_variable` then it will return `undefined`.
 
-JavaScript'te var olmayan ve bildirilmemiş bir değişkeni kullanmaya çalışırsanız, JavaScript bir hata verir `var name is not defined` ve komut dosyası bundan sonra çalışmayı durdurur. Ancak `typeof undeclared_variable` kullanırsanız `undefined` dönecektir.
+Before starting further discussion let's understand the difference between declaration and definition.
 
-Başlamadan önce declaration ve definition arasındaki farkı anlayalım.
-
-`var x` bir bildirimdir çünkü henüz hangi değeri taşıdığını tanımlamıyoruz, ancak varlığını ve bellek tahsisine olan ihtiyacı bildiriyoruz.
-
+`var x` is a declaration because we are not defining what value it holds yet, but we are declaring its existence and the need for memory allocation.
 
 ```javascript
 var x; // declaring x
-console.log(x); // çıktı: undefined
+console.log(x); // output: undefined
 ```
 
-`var x = 1` bu ifade declaration ve definition içerir. Burada tanımlama ve değer ataması x değişkeninde satır içinde gerçekleşir. Bu işleme "initialisation" denir. Javascript'te hem değişken tanımlamaları hem de fonksiyon tanımlamaları scope'un en üstüne gider ve atama işlemi gerçekleşir. Buna "hoisting" adı verilir.
+`var x = 1` is both declaration and definition, here declaration and assignment of value happen inline for variable x—what we are doing is called "initialisation". In JavaScript both variable declarations and function declarations go to the top of the scope in which they are declared, then assignment happens—this series of events is called "hoisting".
 
-Bir değişken bildirilebilir ancak tanımlanamaz. Sonuç `undefined` olacaktır.
+A variable can be declared but not defined. When we try to access it, It will result `undefined`.
 
 ```javascript
 var x; // Declaration
 typeof x === 'undefined'; // Will return true
 ```
 
-Bir değişken bildirilemez veya tanımlanamaz. Böyle bir değişkene referans vermeye çalıştığımızda sonuç `not defined` olacaktır.
+A variable can be neither declared nor defined. When we try to reference such variable then the result will be `not defined`.
 
 ```javascript
 console.log(y);  // Output: ReferenceError: y is not defined
 ```
 
-### Referans Bağlantısı:
+### Ref Link:
 [http://stackoverflow.com/questions/20822022/javascript-variable-definition-declaration](http://stackoverflow.com/questions/20822022/javascript-variable-definition-declaration)
 
 </details>
 
-## Soru 2. Aşağıdaki koşulların hangi değerleri `x` için aynı değildir?
+## Question 2. For which value of `x` the results of the following statements are not the same?
+
 
 ```javascript
 if( x <= 100 ) {...}
 if( !(x > 100) ) {...}
 ```
-<details><summary><b>Cevap</b></summary>
+<details><summary><b>Answer</b></summary>
 
-`NaN <= 100`  `false` çıktısını verir. `NaN > 100` da  `false` çıktısınız verir.
+`NaN <= 100` is `false` and `NaN > 100` is also `false`, so if the
+value of `x` is `NaN`, the statements are not the same.
 
+The same holds true for any value of x that being converted to type Number, returns `NaN`, e.g.: `undefined`, `[1,2,5]`, `{a:22}` , etc.
 
-Aynı durum, Number türüne dönüştürülen herhangi bir x değeri için de geçerlidir; Örneğin `NaN` değeri `undefined`, `[1,2,5]`, `{a:22}` döndürür.
-
-Bu nedenle sayısal değişkenlerle uğraşırken dikkat etmeniz gerekir. `NaN` herhangi bir sayısal değere eşit, ondan küçük veya fazla olamaz; dolayısıyla değerin olup olmadığını kontrol etmenin tek güvenilir yolu `isNaN()` fonksiyonu kullanmaktır.
+This is why you need to pay attention when you deal with numeric variables. `NaN` can’t be equal, less than or more than any other numeric value, so the only reliable way to check if the value is `NaN`, is to use the `isNaN()` function.
 
 </details>
 
-## Javascript Objelerini doğrudan methods'ların içinde tanımlamanın dezavantajları nelerdir?
+## Question 3. What is the drawback of declaring methods directly in JavaScript objects?
 
-<details><summary><b>Cevap</b></summary>
+<details><summary><b>Answer</b></summary>
 
-Yöntemleri doğrudan JavaScript nesnelerinde bildirmenin dezavantajlarından biri, bunların bellek açısından oldukça verimsiz olmasıdır. Bunu yaptığınızda, nesnenin her örneği için yöntemin yeni bir kopyası oluşturulur. İşte bir örnek:
+One of the drawbacks of declaring methods directly in JavaScript objects is that they are very memory inefficient.  When you do that, a new copy of the method is created for each instance of an object. Here's an example:
 
 ```javascript
 var Employee = function (name, company, salary) {
@@ -92,21 +91,21 @@ var emp2 = new Employee('Dinesh Gupta', 'Company 2', 1039999);
 var emp3 = new Employee('Erich Fromm', 'Company 3', 1299483);
 ```
 
-Bu durumda her örnek değişkeni , `emp1` yöntemin kendi kopyasına sahiptir. Ancak yalnızca bir kez eklenecektir. Her fonksiyonu çağırdığımızda `emp1`, `emp2`, `emp3` `formatSalary` methodu çağrılır. `formatSalary2` ise `Employee.prototype` da sadece bir kere çağrılır.
+In this case each instance variable `emp1`, `emp2`, `emp3` has its own copy of the`formatSalary` method. However the `formatSalary2` will only be added once to `Employee.prototype`.
 
 </details>
 
-## Soru 4. Javascript'te “Closure” kavramı nedir? Bir örnekle açıklar mısınız?
+## Question 4. What is “closure” in javascript? Can you provide an example?
 
-<details><summary><b>Cevap</b></summary>
+<details><summary><b>Answer</b></summary>
 
-Closure, başka bir fonksiyonun (ana fonksiyon olarak adlandırılır) içinde tanımlanan bir fonksiyondur. Ana fonksiyonun scope'u içinde bildirilen ve tanımlanan değişkenlere erişimi vardır.
+A closure is a function defined inside another function (called parent function) and as such it has access to the variables declared and defined within its parent function's scope.
 
-Scope'un değişkenlere üç yerden erişimi vardır.
+The closure has access to the variables in three scopes:
 
-- Kendi scope'unda tanımlanan değişken
-- Parent fonksiyonun scope'unda tanımlanan değişken
-- Global alanda tanımlanan değişken
+- Variable declared in its own scope
+- Variable declared in its parent function's scope
+- Variable declared in the global namespace
 
 ```javascript
 var globalVar = "abc"; //Global variable
@@ -135,11 +134,10 @@ var globalVar = "abc"; //Global variable
 
 })(7); // Pass 7 as parameter to the Parent function
 ```
- 
-`innerFunction`, `outerFunction` içinde tanımlanan bir scope'tur ve sonuç olarak, programın genel kapsamında bulunan değişkenlerin yanı sıra, `outerFunction`'un kapsamı içinde bildirilen ve tanımlanan tüm değişkenlere erişime sahiptir.
 
+`innerFunction` is a closure which is defined inside `outerFunction` and consequently has access to all the variables which have been declared and defined within `outerFunction`'s scope as well as any variables residing in the program's global scope.
 
-Yukarıdaki kodun çıktısı şöyle olacaktır:
+The output of the code above would be:
 
 ```javascript
 outerArg = 7
